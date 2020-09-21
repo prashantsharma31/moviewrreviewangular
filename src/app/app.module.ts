@@ -47,6 +47,7 @@ import {
   MatTooltipModule
 } from '@angular/material';
 import { PopularMoviesComponent } from './popular-movies/popular-movies.component';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   exports: [
@@ -82,8 +83,7 @@ import { PopularMoviesComponent } from './popular-movies/popular-movies.componen
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule
-  ],
-  declarations: [PopularMoviesComponent]
+  ]
 })
 export class DemoMaterialModule {}
 @NgModule({
@@ -91,7 +91,9 @@ export class DemoMaterialModule {}
     AppComponent,
     VideoComponentComponent,
     SearchComponentComponent,
-    SideNaveBarComponent
+    SideNaveBarComponent,
+    PopularMoviesComponent, 
+    ModalComponent
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { GetMovieDataService } from './services/get-movie-data.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {  forkJoin } from 'rxjs';
+import { DataSharingService } from './services/data-sharing.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ export class AppComponent {
   pages: number;
   cast: any[] =[];
   toggleNav: boolean = false;
-  constructor(private movieDataService: GetMovieDataService,private modalService: NgbModal){
+  constructor(private movieDataService: GetMovieDataService,private modalService: NgbModal, public dataShare: DataSharingService){
     this.movieDataService.getPopularMovies(this.page).subscribe(
       response => {
         this.pages = response.total_pages; 
@@ -31,39 +32,7 @@ export class AppComponent {
   public toggleSideBar() {
     this.toggleNav = !this.toggleNav;
   }
-  public open(content,movie) {
-    let movieDetail = this.movieDataService.getMoveiDetails(movie.id);
-    let creditDetail = this.movieDataService.getMoveiCredits(movie.id);
-    let videoDetails = this.movieDataService.getMoveiVideos(movie.id);
-    const combinedData = forkJoin(movieDetail, creditDetail, videoDetails); 
-    combinedData.subscribe(
-      response => {
-        this.movie =  response[0];
-        this.movie.cast = response[1];
-        this.movie.cast = response[1].cast.filter(cast => {
-          return cast.profile_path !=null;
-        })
-        this.movie.videos = response[2].results.map(video => {return {id: video.key,name:video.name}});
-        this.movie.genres = this.movie.genres.map(gen => {return gen.name});
-        this.movie.backdrop_path = 'https://images.tmdb.org/t/p/w300'+this.movie.backdrop_path;
-        this.modalService.dismissAll();
-        this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-        }, (reason) => {
-        });
-      }
-    );
-    
-  }
-
-  public getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
+  
 
   public pageChanged(numb: number) {
     this.movieDataService.getPopularMovies(numb).subscribe(
@@ -73,6 +42,7 @@ export class AppComponent {
           result.poster_path = 'https://images.tmdb.org/t/p/w200'+result.poster_path;
           return result;
         });
+        this.dataShare.changeMovies(this.movieData);
       }
     );
   }
@@ -83,5 +53,6 @@ export class AppComponent {
       result.poster_path = 'https://images.tmdb.org/t/p/w200'+result.poster_path;
       return result;
     });
+    this.dataShare.changeMovies(this.movieData);
   }
 }
