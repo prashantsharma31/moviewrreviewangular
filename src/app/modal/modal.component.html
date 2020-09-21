@@ -1,0 +1,48 @@
+    <div class="modal-body">
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+          <label for="dateOfBirth"><b>Movie Details: </b>{{movie.original_title}}</label>
+          <div class="row">
+            <div class="col-12 col-lg-3 p-2 h-25" >
+              <div class="h-50 w-100">
+                <img class="img-fluid" [src] = movie.backdrop_path />
+              </div>
+              <div class="m-2 p-2">
+                <span class="p-2 rounded bg-warning text-dark"><b>Raiting:</b>{{movie.vote_average}}</span>
+                <span class="p-2 ">{{ movie.release_date | date }}</span>
+              </div>
+              <p><b>Budget: </b>{{movie.budget | currency}}</p>
+              <p class="text-success"><b>Tagline: </b>{{movie.tagline}}</p>
+              <p><b>Status: </b>{{movie.status}}</p>
+              <p>{{movie.overview}}</p>
+            </div>
+            <div class="col-12 col-lg-9">
+              <span class="mr-2 p-1 bg-primary text-white" *ngFor="let gen of movie.genres">
+                <b>{{gen}}</b>
+              </span>
+              <div class="row">
+                <div class="col-12 col-md-6" *ngFor="let video of movie.videos">
+                  <app-video-component  [videoKey] = 'video.id'></app-video-component>
+                </div>
+              </div>
+              <div>
+                <h4>Cast</h4>
+                <div class="row">
+                  <div *ngFor="let cast of movie.cast"  class="col-12 col-md-4 col-lg-3 text-center">
+                    <div class="">
+                      <img class="img" [src] = "'https://images.tmdb.org/t/p/w200' + cast.profile_path"   />
+                    </div>
+                    <p class="m-0 p-1">
+                      <b>{{cast.character}}</b>
+                    </p>
+                    <p class="m-0 p-0">
+                      {{cast.name}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+    </div>
