@@ -1,0 +1,81 @@
+  <body class="h-100">
+    <div class="container-fluid">
+      <mat-toolbar class="bg-dark text-light">
+        <button mat-icon-button (click)="toggleSideBar() "><mat-icon>menu</mat-icon></button>
+        <h1>{{title}}</h1>
+      </mat-toolbar>
+      <app-side-nave-bar [opened]="toggleNav"></app-side-nave-bar>
+      <div class="d-flex flex-sm-row flex-column bg-dark">
+        <div class="mr-auto p-2 text-center">        
+          <ngb-pagination class="mr-auto pt-2" [(page)]="page" (pageChange)="pageChanged(page)"  [collectionSize]="pages" [maxSize]="6" aria-label="Default pagination"></ngb-pagination>
+        </div>
+        <div class="p-2 text-center">        
+          <app-search-component class="pt-2" (newItemEvent)="searchValue($event)" ></app-search-component>
+        </div>
+      </div>
+      <div class="row text-center">
+          <div class="col-12 col-md-6 col-lg-3 p-2 h-25" *ngFor='let movie of movieData'>
+            <div class="h-50 w-100">
+              <img class="img-fluid" [src] = movie.poster_path (click)="open(content,movie)" />
+            </div>
+            <div class="m-2">
+              {{movie.original_title}}
+              <span class="p-2 rounded bg-warning text-dark"><b>Raiting:</b>{{movie.vote_average}}</span>
+              <p class="mt-1">{{ movie.release_date | date }}</p>
+            </div>
+          </div>
+      </div>
+    </div>
+    <ng-template #content class="" let-modal>
+      <div class="modal-body">
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            <label for="dateOfBirth"><b>Movie Details: </b>{{movie.original_title}}</label>
+            <div class="row">
+              <div class="col-12 col-lg-3 p-2 h-25" >
+                <div class="h-50 w-100">
+                  <img class="img-fluid" [src] = movie.backdrop_path />
+                </div>
+                <div class="m-2 p-2">
+                  <span class="p-2 rounded bg-warning text-dark"><b>Raiting:</b>{{movie.vote_average}}</span>
+                  <span class="p-2 ">{{ movie.release_date | date }}</span>
+                </div>
+                <p><b>Budget: </b>{{movie.budget | currency}}</p>
+                <p class="text-success"><b>Tagline: </b>{{movie.tagline}}</p>
+                <p><b>Status: </b>{{movie.status}}</p>
+                <p>{{movie.overview}}</p>
+              </div>
+              <div class="col-12 col-lg-9">
+                <span class="mr-2 p-1 bg-primary text-white" *ngFor="let gen of movie.genres">
+                  <b>{{gen}}</b>
+                </span>
+                <div class="row">
+                  <div class="col-12 col-md-6" *ngFor="let video of movie.videos">
+                    <app-video-component  [videoKey] = 'video.id'></app-video-component>
+                  </div>
+                </div>
+                <div>
+                  <h4>Cast</h4>
+                  <div class="row">
+                    <div *ngFor="let cast of movie.cast"  class="col-12 col-md-4 col-lg-3 text-center">
+                      <div class="">
+                        <img class="img" [src] = "'https://images.tmdb.org/t/p/w200' + cast.profile_path"   />
+                      </div>
+                      <p class="m-0 p-1">
+                        <b>{{cast.character}}</b>
+                      </p>
+                      <p class="m-0 p-0">
+                        {{cast.name}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+      </div>
+    </ng-template>
+  </body>
+  
+<router-outlet></router-outlet>

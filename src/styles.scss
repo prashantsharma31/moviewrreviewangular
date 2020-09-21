@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.modal-dialog{
+    margin-left: 0;
+    .modal-content {
+        width: 90vw;
+        margin-left: 5vw;
+        margin-top: 5vh;
+        .modal-body{
+             background-image: linear-gradient(147deg, #ffeeee 0%, #ddefbb 74%);
+            
+        }
+    }
+}
+
+.page-item.active .page-link{
+    background-color: #343a40 !important;
+    z-index: 0;
+}
+
+.img{
+    width: 75px;
+}

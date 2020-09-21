@@ -1,0 +1,5 @@
+<form class="form-inline waves-light" mdbWavesEffect>
+    <div class="md-form col-12 text-center" >
+      <input class="form-control mr-sm-2" [formControl]="search" (keyup)="applyFilter($event.target.value)" type="text" placeholder="Search">
+    </div>
+  </form>

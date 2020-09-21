@@ -1,0 +1,8 @@
+<mat-drawer-container>
+    <mat-sidenav #sidenav class="side-nav-left" position="start" role="directory" [opened]="opened">
+      <div class="backdrop" (click)="opened = false"></div>
+        <div class="side-nav-content text-light">
+            <button routerLink="/topRated">Top Movies</button>
+        </div>
+    </mat-sidenav>
+</mat-drawer-container>
