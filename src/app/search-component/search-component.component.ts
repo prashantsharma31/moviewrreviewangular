@@ -20,13 +20,12 @@ export class SearchComponentComponent implements OnInit {
     this.search.valueChanges.pipe(debounceTime(500),distinctUntilChanged(),
     switchMap(
       (value) => {
-        if(this.prevValue != value){
-          this.prevValue = value;
-          return this.http.getSearchedMovies(value);
-          } else {return value}
-        } 
-    )).subscribe((value: any) => {
-       value.results ? this.newItemEvent.emit(value): null;
-    });
+          if(this.prevValue != value){
+            this.prevValue = value;
+            this.newItemEvent.emit(value);
+          }
+        return value; 
+      }
+    )).subscribe(val => {});
   }
 }

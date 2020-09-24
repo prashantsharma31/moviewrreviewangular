@@ -1,1 +1,12 @@
-<p>top-movies works!</p>
+<div class="row section text-center">
+    <div class="col-12 col-md-6 col-lg-3 p-2 h-25" *ngFor='let movie of movieData'>
+      <div class="h-50 w-100">
+        <img class="img-fluid" [src] = movie.poster_path (click)="open(movie)" />
+      </div>
+      <div class="m-2">
+        {{movie.original_title}}
+        <span class="p-2 rounded bg-warning text-dark"><b>Raiting:</b>{{movie.vote_average}}</span>
+        <p class="mt-1">{{ movie.release_date | date }}</p>
+      </div>
+    </div>
+</div>

@@ -32,4 +32,9 @@ export class GetMovieDataService {
     return this.httpService.get('https://api.themoviedb.org/3/search/movie/'
     ,{api_key: '6ffebee4e344a23602dd3c512eaa89f2',language: 'en-US',query: query});
   }
+
+  public getTopRatedMovies(page: number): Observable<any> {
+    return this.httpService.get('https://api.themoviedb.org/3/movie/top_rated'
+    ,{api_key: '6ffebee4e344a23602dd3c512eaa89f2',language: 'en-US', page: page});
+  }
 }

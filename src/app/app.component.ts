@@ -3,6 +3,8 @@ import { GetMovieDataService } from './services/get-movie-data.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {  forkJoin } from 'rxjs';
 import { DataSharingService } from './services/data-sharing.service';
+import { Route } from '@angular/compiler/src/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -17,16 +19,8 @@ export class AppComponent {
   pages: number;
   cast: any[] =[];
   toggleNav: boolean = false;
-  constructor(private movieDataService: GetMovieDataService,private modalService: NgbModal, public dataShare: DataSharingService){
-    this.movieDataService.getPopularMovies(this.page).subscribe(
-      response => {
-        this.pages = response.total_pages; 
-        this.movieData =  response.results.map(result => {
-          result.poster_path = 'https://images.tmdb.org/t/p/w200'+result.poster_path;
-          return result;
-        });
-      }
-    );
+  constructor(private route: ActivatedRoute, private movieDataService: GetMovieDataService,private modalService: NgbModal, public dataShare: DataSharingService){
+    this.resetMoviesData(this.page);
   }
 
   public toggleSideBar() {
@@ -35,7 +29,31 @@ export class AppComponent {
   
 
   public pageChanged(numb: number) {
-    this.movieDataService.getPopularMovies(numb).subscribe(
+    if(this.route.snapshot['_routerState'].url == '/topRated'){
+      this.resetTopMoviesData(numb);
+    } else {
+      this.resetMoviesData(numb);
+    }
+  }
+
+  public searchValue(search: any){
+    if(search) {
+      this.movieDataService.getSearchedMovies(search).subscribe( value => {
+        this.pages = value.total_pages;
+        this.movieData =  value.results.map(result => {
+          result.poster_path = 'https://images.tmdb.org/t/p/w200'+result.poster_path;
+          return result;
+        });
+        this.dataShare.changeMovies(this.movieData);
+        }
+      )
+    } else {
+      this.pageChanged(1);
+    }
+  }
+
+  public resetMoviesData(page: number) {
+    this.movieDataService.getPopularMovies(page).subscribe(
       response => {
         this.pages = response.total_pages; 
         this.movieData =  response.results.map(result => {
@@ -45,14 +63,19 @@ export class AppComponent {
         this.dataShare.changeMovies(this.movieData);
       }
     );
+    
   }
 
-  public searchValue(value: any){
-    this.pages = value.total_pages;
-    this.movieData =  value.results.map(result => {
-      result.poster_path = 'https://images.tmdb.org/t/p/w200'+result.poster_path;
-      return result;
-    });
-    this.dataShare.changeMovies(this.movieData);
+  public resetTopMoviesData(page: number) {
+    this.movieDataService.getTopRatedMovies(page).subscribe(
+      response => {
+        this.pages = response.total_pages; 
+        this.movieData =  response.results.map(result => {
+          result.poster_path = 'https://images.tmdb.org/t/p/w200'+result.poster_path;
+          return result;
+        });
+       this.dataShare.changeMovies(this.movieData);
+      }
+    );
   }
 }

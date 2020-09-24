@@ -6,21 +6,36 @@
     width: 100%;
     z-index: 1000;
     background: transparent;
+
+    .side-nav-content {
+        z-index: 1002;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        overflow: auto;
+        overflow-y: none;
+        box-shadow: 0 2px 14px 0 rgba(130, 130, 130, 0.5);
+        background-color: #1e1929 !important;
+    }
+
+    .menu-row {
+        &:hover {
+            background-color: #1E1962 !important;
+            transition: 0.5s
+        }
+
+        .select-button {
+            color: white;
+            background: transparent;
+            border: none;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
 }
 
-.side-nav-content {
-    z-index: 1002;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 25vw;
-    height: 100%;
-    padding: 30px;
-    overflow: auto;
-    overflow-y: none;
-    box-shadow: 0 2px 14px 0 rgba(130, 130, 130, 0.5);
-    background-color: #1e1929 !important;
-}
+
 
 .backdrop {
     position: fixed !important;
@@ -32,3 +47,4 @@
 .mat-drawer {
     box-shadow: unset !important;
 }
+
