@@ -1,10 +1,10 @@
-    <div class="container-fluid pl-0">
-      <mat-toolbar class="bg-dark text-light">
+    <div class="container-fluid pl-0" >
+      <mat-toolbar class="text-light" style="background-color: rgb(10,42,57) !important">
         <button mat-icon-button (click)="toggleSideBar() "><mat-icon>menu</mat-icon></button>
         <h1><a class="btn-lg text-light" routerLink="" role="button">{{title}}</a></h1>
       </mat-toolbar>
       <app-side-nave-bar [opened]="toggleNav"></app-side-nave-bar>
-      <div class="d-flex flex-sm-row flex-column bg-dark">
+      <div class="d-flex flex-sm-row flex-column "style="background-color: rgb(10,42,57) !important">
         <div class="mr-auto p-2 text-center">        
           <ngb-pagination class="mr-auto pt-2" [(page)]="page" (pageChange)="pageChanged(page)"  [collectionSize]="pages" [maxSize]="6" aria-label="Default pagination"></ngb-pagination>
         </div>
