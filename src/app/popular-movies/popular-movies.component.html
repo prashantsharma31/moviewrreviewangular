@@ -9,4 +9,7 @@
         <p class="mt-1">{{ movie.release_date | date }}</p>
       </div>
     </div>
+    <div class="col-12 text-center" *ngIf="movieData?.length == 0">
+      <h5 class=""> No such movie found, kindly re enter the correct name</h5>
+    </div>
 </div>

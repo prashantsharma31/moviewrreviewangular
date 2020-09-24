@@ -45,7 +45,8 @@ export class AppComponent {
           return result;
         });
         this.dataShare.changeMovies(this.movieData);
-        }
+        },
+        err => console.log(err)
       )
     } else {
       this.pageChanged(1);
